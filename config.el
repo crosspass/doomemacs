@@ -21,10 +21,11 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-; (setq doom-font (font-spec :family "Fira Code" :size 14 :weight 'semi-light)
-;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
-(setq doom-font (font-spec :size 14)
+;; (setq doom-font (font-spec :family "Fira Code" :size 14)
+;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
+(setq doom-font (font-spec :size 15)
      doom-variable-pitch-font (font-spec :size 16))
+
 (defun my-cjk-font()
     (dolist (charset '(kana han cjk-misc symbol bopomofo))
       (set-fontset-font t charset (font-spec :family "Sarasa Mono SC"))))
@@ -82,5 +83,18 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; Whether display the environment version.
-;;
+(add-hook 'vue-mode-hook #'lsp!)
+
+(use-package! tree-sitter
+              :config
+              (require 'tree-sitter-langs)
+              (global-tree-sitter-mode)
+              (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+)
+(add-hook 'web-mode-hook  'my-web-mode-hook)
